@@ -185,3 +185,22 @@
 .mask-image-vertical {
   mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent);
 }
+
+/* ==========================================
+   CUSTOM ANIMATIONS
+   ========================================== */
+/* Pure CSS Marquee */
+@keyframes scroll-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.my-custom-marquee {
+  animation: scroll-marquee 30s linear infinite;
+  display: flex;
+  width: max-content;
+}
+
+.my-custom-marquee:hover {
+  animation-play-state: paused;
+}

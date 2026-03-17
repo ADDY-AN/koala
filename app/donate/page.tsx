@@ -87,11 +87,13 @@ export default function DonatePage() {
             <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-primary/10 to-transparent -z-10" />
             <div className="absolute -top-32 -right-32 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-[80px] -z-10" />
 
-            {/* Live Ticker */}
+            {/* Live Ticker - FIXED WITH ARBITRARY TAILWIND CLASS */}
             {donations.length > 0 && (
                 <div className="live-ticker w-full bg-primary overflow-hidden py-3 border-y border-primary/20 relative flex items-center shadow-md mb-12">
                     <div className="absolute left-0 w-16 h-full bg-gradient-to-r from-primary to-transparent z-10" />
-                    <div className="flex w-max animate-marquee hover:[animation-play-state:paused] items-center">
+
+                    {/* The fix is right here in the animate-[marquee...] class */}
+                    <div className="my-custom-marquee items-center">
                         {[...donations, ...donations].map((d, i) => (
                             <div key={i} className="flex items-center mx-6 gap-2 shrink-0 text-sm">
                                 <Heart size={14} className="text-secondary fill-secondary animate-pulse" />
@@ -101,6 +103,7 @@ export default function DonatePage() {
                             </div>
                         ))}
                     </div>
+
                     <div className="absolute right-0 w-16 h-full bg-gradient-to-l from-primary to-transparent z-10" />
                 </div>
             )}
