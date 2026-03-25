@@ -92,7 +92,7 @@ export default function AboutPage() {
             <section className="story-section py-24 px-5 max-w-3xl mx-auto text-center relative z-10">
                 <span className="story-paragraph text-secondary font-caveat text-4xl mb-6 block">The Heartbreak</span>
                 <p className="story-paragraph text-2xl md:text-3xl font-playfair text-foreground leading-snug mb-8">
-                    At Continua Kids, we see it every single day. A parent brings their 3-year-old who hasn't spoken a word yet. The assessment is clear — speech therapy can transform their life.
+                    At Continua Kids Giggles, we see it every single day. A parent brings their 3-year-old who hasn't spoken a word yet. The assessment is clear — speech therapy can transform their life.
                 </p>
                 <p className="story-paragraph text-xl text-muted-foreground font-lato leading-relaxed mb-8">
                     The verdict? <strong className="text-primary">"We can't afford it."</strong> They walk out. The child's window of early intervention slowly closes.

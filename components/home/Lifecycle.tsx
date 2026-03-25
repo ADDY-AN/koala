@@ -73,7 +73,7 @@ export default function Lifecycle() {
                         If parents cannot afford the monthly costs, the child drops out of therapy. Unless the mother and family are empowered, the child cannot be either. It is all interlinked.
                     </p>
                     <p className="lifecycle-text">
-                        Our programmes evolved logically: from awareness camps to funding therapy at Continua Kids, to parental empowerment. Through the lifecycle approach, we ensure sustainable growth.
+                        Our programmes evolved logically: from awareness camps to funding therapy at Continua Kids Giggles, to parental empowerment. Through the lifecycle approach, we ensure sustainable growth.
                     </p>
                 </div>
 

@@ -49,7 +49,7 @@ export default function CorePrograms() {
                     {
                         title: "THERAPY SPONSORSHIPS",
                         img: "https://images.unsplash.com/photo-1529390079861-591de354faf5?q=80&w=600",
-                        desc: "Directly funding life-changing speech, occupational, and behavioral therapy sessions at Continua Kids for families who cannot afford it."
+                        desc: "Directly funding life-changing speech, occupational, and behavioral therapy sessions at Continua Kids Giggles for families who cannot afford it."
                     },
                     {
                         title: "PARENT WORKSHOPS",
