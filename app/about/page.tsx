@@ -14,98 +14,45 @@ export default function AboutPage() {
     const container = useRef<HTMLElement>(null);
 
     useGSAP(() => {
-        // 1. Hero Entry Animation
         const tl = gsap.timeline();
         tl.from(".hero-title-word", {
-            y: 100,
-            opacity: 0,
-            duration: 1.2,
-            stagger: 0.1,
-            ease: "power4.out",
-            delay: 0.2
+            y: 100, opacity: 0, duration: 1.2, stagger: 0.1, ease: "power4.out", delay: 0.2
         })
             .from(".hero-subtitle", {
-                y: 30,
-                opacity: 0,
-                duration: 1,
-                ease: "power3.out"
+                y: 30, opacity: 0, duration: 1, ease: "power3.out"
             }, "-=0.8")
             .from(".scroll-indicator", {
-                opacity: 0,
-                y: -20,
-                duration: 1,
-                repeat: -1,
-                yoyo: true,
-                ease: "power1.inOut"
+                opacity: 0, y: -20, duration: 1, repeat: -1, yoyo: true, ease: "power1.inOut"
             }, "-=0.5");
 
-        // 2. Giant Background Marquee (Moves left/right based on scroll)
         gsap.to(".bg-marquee", {
             scrollTrigger: {
-                trigger: container.current,
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1, // Smooth scrubbing
+                trigger: container.current, start: "top top", end: "bottom bottom", scrub: 1
             },
-            xPercent: -50,
-            ease: "none"
+            xPercent: -50, ease: "none"
         });
 
-        // 3. The "Heartbreak" Story Reveal
         gsap.from(".story-paragraph", {
-            scrollTrigger: {
-                trigger: ".story-section",
-                start: "top 70%",
-            },
-            y: 50,
-            opacity: 0,
-            duration: 1,
-            stagger: 0.3,
-            ease: "power3.out"
+            scrollTrigger: { trigger: ".story-section", start: "top 70%" },
+            y: 50, opacity: 0, duration: 1, stagger: 0.3, ease: "power3.out"
         });
 
-        // 4. Vision Section Parallax & Stagger
         gsap.from(".vision-text", {
-            scrollTrigger: {
-                trigger: ".vision-section",
-                start: "top 75%",
-            },
-            x: -50,
-            opacity: 0,
-            duration: 1,
-            stagger: 0.2,
-            ease: "power3.out"
+            scrollTrigger: { trigger: ".vision-section", start: "top 75%" },
+            x: -50, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out"
         });
 
-        // Image Parallax (Moves slightly slower than the scroll)
         gsap.fromTo(".vision-image",
             { y: -50, scale: 1.1 },
             {
-                scrollTrigger: {
-                    trigger: ".vision-section",
-                    start: "top bottom",
-                    end: "bottom top",
-                    scrub: true,
-                },
-                y: 50,
-                scale: 1,
-                ease: "none"
+                scrollTrigger: { trigger: ".vision-section", start: "top bottom", end: "bottom top", scrub: true },
+                y: 50, scale: 1, ease: "none"
             }
         );
 
-        // 5. Mission Card "Snap & Pop" Effect
         gsap.from(".mission-card", {
-            scrollTrigger: {
-                trigger: ".mission-section",
-                start: "top 80%",
-            },
-            scale: 0.8,
-            rotationX: 20,
-            y: 100,
-            opacity: 0,
-            duration: 1.2,
-            ease: "elastic.out(1, 0.7)",
-            transformOrigin: "center bottom"
+            scrollTrigger: { trigger: ".mission-section", start: "top 80%" },
+            scale: 0.8, rotationX: 20, y: 100, opacity: 0, duration: 1.2, ease: "elastic.out(1, 0.7)", transformOrigin: "center bottom"
         });
 
     }, { scope: container });
@@ -122,7 +69,13 @@ export default function AboutPage() {
 
             {/* CUSTOM CRAZY HERO */}
             <section className="relative min-h-[70vh] flex flex-col items-center justify-center text-center px-5 overflow-hidden">
-                <div className="max-w-4xl mx-auto">
+
+                {/* GIANT FADED LOGO WATERMARK */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[600px] md:h-[600px] opacity-[0.04] pointer-events-none -z-10 mix-blend-multiply">
+                    <img src="/images/koala-logo.png" alt="Watermark" className="w-full h-full object-contain grayscale" />
+                </div>
+
+                <div className="max-w-4xl mx-auto relative z-10">
                     <h1 className="text-5xl md:text-8xl font-playfair font-black text-primary mb-6 flex flex-wrap justify-center gap-x-4 overflow-hidden">
                         <span className="hero-title-word block">About</span>
                         <span className="hero-title-word block text-secondary">Koala</span>
@@ -151,7 +104,7 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            {/* PARALLAX VISION SECTION */}
+            {/* PARALLAX VISION SECTION (UPDATED IMAGE TO ENGAGED 6-7 YR OLD) */}
             <section className="vision-section py-24 px-5 max-w-6xl mx-auto relative z-10">
                 <div className="grid md:grid-cols-2 gap-16 items-center">
                     <div className="overflow-hidden">
@@ -164,10 +117,9 @@ export default function AboutPage() {
                         </p>
                     </div>
                     <div className="rounded-[40px] overflow-hidden shadow-2xl border-4 border-white relative h-[500px]">
-                        {/* The image inside this container moves up and down creating a 3D window effect */}
                         <img
-                            src="https://images.unsplash.com/photo-1602080858428-57174f9431cf?q=80&w=1000"
-                            alt="Vision"
+                            src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?q=80&w=1000&auto=format&fit=crop"
+                            alt="Young boy focused and happy while learning"
                             className="vision-image w-full h-[120%] object-cover absolute top-[-10%] left-0"
                         />
                         <div className="absolute inset-0 bg-primary/10 mix-blend-multiply" />
@@ -178,18 +130,12 @@ export default function AboutPage() {
             {/* POP-IN MISSION CARD */}
             <section className="mission-section py-32 px-5 max-w-5xl mx-auto relative z-10 perspective-[1000px]">
                 <div className="mission-card bg-primary text-primary-foreground rounded-[60px] p-12 md:p-20 relative overflow-hidden shadow-[0_30px_60px_rgba(45,80,22,0.4)] border-b-[12px] border-secondary">
-
-                    {/* Decorative spinning background blur */}
                     <div className="absolute -top-32 -right-32 w-96 h-96 bg-secondary/20 rounded-full blur-[100px] animate-[spin_10s_linear_infinite]" />
-
                     <span className="text-secondary font-caveat text-5xl mb-8 block relative z-10 transform -rotate-2">Our Mission</span>
-
                     <p className="text-3xl md:text-4xl font-playfair font-bold leading-tight mb-8 relative z-10 text-white">
                         Koala Kuddle exists so that underprivileged children are not left waiting outside the therapy room while others move ahead.
                     </p>
-
                     <div className="w-24 h-1 bg-secondary mb-8 relative z-10" />
-
                     <p className="text-primary-foreground/90 text-xl font-lato leading-relaxed relative z-10">
                         By nurturing early intervention and funding life-changing therapy sessions at partner clinics, we wrap families in a community of hope. We exist because you choose to care.
                     </p>

@@ -53,11 +53,15 @@ export default function ProgramsPage() {
             </section>
 
             <section className="py-16 px-5 max-w-7xl mx-auto space-y-32">
-                {/* Pillar 1 */}
+                {/* Pillar 1 (UPDATED IMAGE) */}
                 <div className="pillar-section grid md:grid-cols-2 gap-16 items-center perspective-[1000px]">
                     <div className="order-2 md:order-1 relative">
                         <div className="pillar-blob absolute -inset-4 bg-secondary/20 rounded-3xl transform -rotate-3 -z-10" />
-                        <img src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?q=80&w=1000&auto=format&fit=crop" alt="Therapy" className="pillar-image rounded-3xl shadow-xl border border-border w-full object-cover aspect-[4/3]" />
+                        <img
+                            src="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=1000&auto=format&fit=crop"
+                            alt="Child in therapy session playing with toys"
+                            className="pillar-image rounded-3xl shadow-xl border border-border w-full object-cover aspect-[4/3]"
+                        />
                         <Card className="floating-card absolute -bottom-8 -right-8 w-64 shadow-2xl border-primary/10 hidden md:block bg-white/95 backdrop-blur-sm">
                             <CardContent className="p-6 flex items-start gap-4">
                                 <div className="bg-primary/10 p-3 rounded-full text-primary"><Stethoscope size={24} /></div>
@@ -79,7 +83,7 @@ export default function ProgramsPage() {
                     </div>
                 </div>
 
-                {/* Pillar 2 */}
+                {/* Pillar 2 (UPDATED IMAGE) */}
                 <div className="pillar-section grid md:grid-cols-2 gap-16 items-center perspective-[1000px]">
                     <div className="pillar-text space-y-6">
                         <span className="text-secondary font-caveat text-4xl block">Pillar 02</span>
@@ -95,15 +99,23 @@ export default function ProgramsPage() {
                     </div>
                     <div className="relative">
                         <div className="pillar-blob absolute -inset-4 bg-primary/10 rounded-3xl transform rotate-3 -z-10" />
-                        <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?q=80&w=1000&auto=format&fit=crop" alt="Community" className="pillar-image rounded-3xl shadow-xl border border-border w-full object-cover aspect-[4/3]" />
+                        <img
+                            src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1000&auto=format&fit=crop"
+                            alt="Group of happy children in a community"
+                            className="pillar-image rounded-3xl shadow-xl border border-border w-full object-cover aspect-[4/3]"
+                        />
                     </div>
                 </div>
 
-                {/* Pillar 3 */}
+                {/* Pillar 3 (UPDATED IMAGE) */}
                 <div className="pillar-section grid md:grid-cols-2 gap-16 items-center perspective-[1000px]">
                     <div className="order-2 md:order-1 relative">
                         <div className="pillar-blob absolute -inset-4 bg-secondary/20 rounded-3xl transform -rotate-3 -z-10" />
-                        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1000&auto=format&fit=crop" alt="Parents" className="pillar-image rounded-3xl shadow-xl border border-border w-full object-cover aspect-[4/3]" />
+                        <img
+                            src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1000&auto=format&fit=crop"
+                            alt="Parent comforting and supporting their child"
+                            className="pillar-image rounded-3xl shadow-xl border border-border w-full object-cover aspect-[4/3]"
+                        />
                     </div>
                     <div className="pillar-text order-1 md:order-2 space-y-6">
                         <span className="text-secondary font-caveat text-4xl block">Pillar 03</span>
@@ -131,7 +143,7 @@ export default function ProgramsPage() {
 
                     {/* LOGO BADGE IN CTA */}
                     <div className="cta-element w-24 h-24 rounded-full border-4 border-white/20 shadow-xl overflow-hidden mb-8 bg-white p-1">
-                        <img src="/images/logo.png" alt="Koala Kuddle Logo" className="w-full h-full object-cover rounded-full" />
+                        <img src="/images/koala-logo.png" alt="Koala Kuddle Logo" className="w-full h-full object-cover rounded-full" />
                     </div>
 
                     <h2 className="cta-element text-4xl md:text-6xl font-playfair font-black leading-tight mb-8">
