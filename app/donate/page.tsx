@@ -255,7 +255,7 @@ export default function DonatePage() {
                                     Your name has been added to our Impact Wall. To receive your 80G tax exemption receipt, please send us a screenshot of your successful transaction.
                                 </p>
                                 <div className="success-element pt-6">
-                                    <Button className="rounded-full h-16 px-10 font-bold text-lg bg-[#25D366] hover:bg-[#20b858] text-white shadow-xl shadow-[#25D366]/30 hover:-translate-y-1 transition-transform" onClick={() => window.open(`https://wa.me/919999999999?text=Hi,%20I%20just%20donated%20Rs.%20${amount}.%20Here%20is%20my%20screenshot%20for%20the%20receipt.`, '_blank')}>
+                                    <Button className="rounded-full h-16 px-10 font-bold text-lg bg-[#25D366] hover:bg-[#20b858] text-white shadow-xl shadow-[#25D366]/30 hover:-translate-y-1 transition-transform" onClick={() => window.open(`https://wa.me/+919031572832?text=Hi,%20I%20just%20donated%20Rs.%20${amount}.%20Here%20is%20my%20screenshot%20for%20the%20receipt.`, '_blank')}>
                                         Send Screenshot on WhatsApp
                                     </Button>
                                 </div>
