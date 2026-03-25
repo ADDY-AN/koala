@@ -13,13 +13,19 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { QRCodeSVG } from "qrcode.react";
 
+// 👇 PASTE YOUR ACTUAL NGO UPI ID HERE 👇
+const NGO_UPI_ID = "MSKOALAKUDDLEKIDSFOUNDATION.eazypay@icici";
+
 export default function DonatePage() {
     const container = useRef<HTMLElement>(null);
 
     // UI State: 1 = Details, 2 = QR Code, 3 = Success/WhatsApp
     const [step, setStep] = useState<1 | 2 | 3>(1);
 
-    const [amount, setAmount] = useState<number>(2500);
+    // Amount & Custom Amount State
+    const [amount, setAmount] = useState<number | "">(2500);
+    const [isCustom, setIsCustom] = useState(false);
+
     const [donorName, setDonorName] = useState("");
     const [donations, setDonations] = useState<any[]>([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,19 +33,26 @@ export default function DonatePage() {
     // Live Carousel Logic
     useEffect(() => {
         const fetchD = async () => {
-            const { data } = await supabase.from("donations").select("*").order("created_at", { ascending: false }).limit(10);
+            // Added error catching here just in case!
+            const { data, error } = await supabase.from("donations").select("*").order("created_at", { ascending: false }).limit(10);
+            if (error) console.error("Ticker Fetch Error:", error);
             if (data) setDonations(data);
         };
         fetchD();
 
         const ch = supabase.channel("public:donations").on("postgres_changes", { event: "INSERT", schema: "public", table: "donations" }, (p) => {
-            setDonations((cur) => [p.new, ...cur].slice(0, 10));
+            setDonations((cur) => {
+                // BUG FIX: Stop React Strict Mode from adding the same donation twice!
+                if (cur.some(d => d.id === p.new.id)) return cur;
+
+                return [p.new, ...cur].slice(0, 10);
+            });
         }).subscribe();
 
         return () => { supabase.removeChannel(ch); };
     }, []);
 
-    // GSAP Animations based on step changes
+    // GSAP Animations
     useGSAP(() => {
         const tl = gsap.timeline();
 
@@ -61,21 +74,34 @@ export default function DonatePage() {
         }
     }, { scope: container, dependencies: [step] });
 
-    // Step 1 -> Step 2 (Just showing the QR, NO database saving yet)
+    // Step 1 -> Step 2
     const handleProceedToQR = () => {
         if (!donorName) return alert("Please enter your name for the Impact Wall!");
+        if (!amount || Number(amount) <= 0) return alert("Please enter a valid donation amount!");
+
         gsap.to(".submit-btn", { scale: 0.95, duration: 0.1, yoyo: true, repeat: 1 });
         setStep(2);
     };
 
-    // Step 2 -> Step 3 (Saving to DB ONLY AFTER they confirm they paid)
+    // Step 2 -> Step 3 (Saving to DB with strict Error Catching)
     const handleConfirmPayment = async () => {
         setIsSubmitting(true);
         gsap.to(".confirm-btn", { scale: 0.95, duration: 0.1, yoyo: true, repeat: 1 });
 
-        // NOW we save it to the database, so it appears on the wall!
-        await supabase.from("donations").insert([{ donor_name: donorName, amount: amount }]);
+        // Attempt to save to Supabase
+        const { error } = await supabase.from("donations").insert([
+            { donor_name: donorName, amount: Number(amount) }
+        ]);
 
+        // If Supabase rejects it, stop and alert the user
+        if (error) {
+            console.error("Supabase Insert Error:", error);
+            alert(`Database Error: ${error.message}\n\nPlease check your Supabase Row Level Security (RLS) policies.`);
+            setIsSubmitting(false);
+            return;
+        }
+
+        // If successful, proceed to Success step
         setIsSubmitting(false);
         setStep(3);
     };
@@ -115,7 +141,7 @@ export default function DonatePage() {
                             Fund a Child's <br/><span className="text-secondary">Breakthrough</span>
                         </CardTitle>
                         <CardDescription className="text-base text-muted-foreground font-lato">
-                            Zero platform fees. 100% of your contribution goes directly to therapy.
+                            Zero platform fees. 100% of your contribution goes directly to therapy via secure UPI.
                         </CardDescription>
                     </CardHeader>
 
@@ -125,12 +151,41 @@ export default function DonatePage() {
                         {step === 1 && (
                             <div className="space-y-10">
                                 <div className="grid grid-cols-2 gap-4 md:gap-6">
-                                    {[{ v: 500, pop: false }, { v: 999, pop: false }, { v: 2500, pop: true }, { v: 5000, pop: false }].map((p) => (
-                                        <div key={p.v} onClick={() => setAmount(p.v)} className={`amount-btn relative cursor-pointer p-6 rounded-3xl border-2 text-center transition-colors duration-300 flex items-center justify-center min-h-[100px] ${amount === p.v ? "border-primary bg-primary/5 shadow-inner" : "border-border hover:border-primary/40 hover:bg-muted/30"}`}>
+
+                                    {/* Preset Buttons */}
+                                    {[{ v: 500, pop: false }, { v: 999, pop: false }, { v: 2500, pop: true }].map((p) => (
+                                        <div
+                                            key={p.v}
+                                            onClick={() => { setAmount(p.v); setIsCustom(false); }}
+                                            className={`amount-btn relative cursor-pointer p-6 rounded-3xl border-2 text-center transition-colors duration-300 flex items-center justify-center min-h-[100px] ${!isCustom && amount === p.v ? "border-primary bg-primary/5 shadow-inner" : "border-border hover:border-primary/40 hover:bg-muted/30"}`}
+                                        >
                                             {p.pop && <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-secondary text-primary-foreground text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-md animate-bounce">Most Popular</span>}
                                             <span className="font-playfair text-4xl font-black text-foreground">₹{p.v}</span>
                                         </div>
                                     ))}
+
+                                    {/* Custom Amount Button */}
+                                    <div
+                                        onClick={() => { setIsCustom(true); if(amount === 500 || amount === 999 || amount === 2500) setAmount(""); }}
+                                        className={`amount-btn relative cursor-pointer p-6 rounded-3xl border-2 text-center transition-colors duration-300 flex items-center justify-center min-h-[100px] ${isCustom ? "border-primary bg-primary/5 shadow-inner" : "border-border hover:border-primary/40 hover:bg-muted/30"}`}
+                                    >
+                                        {isCustom ? (
+                                            <div className="flex items-center text-4xl font-black font-playfair text-foreground justify-center">
+                                                <span className="mr-1">₹</span>
+                                                <input
+                                                    autoFocus
+                                                    type="number"
+                                                    value={amount}
+                                                    onChange={(e) => setAmount(e.target.value ? Number(e.target.value) : "")}
+                                                    className="bg-transparent border-none outline-none w-24 text-center p-0 m-0 focus:ring-0 placeholder:text-muted-foreground/30 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                                    placeholder="0"
+                                                />
+                                            </div>
+                                        ) : (
+                                            <span className="font-playfair text-2xl md:text-3xl font-black text-foreground">Custom</span>
+                                        )}
+                                    </div>
+
                                 </div>
 
                                 <div className="donate-form-area space-y-8 mt-4">
@@ -140,7 +195,7 @@ export default function DonatePage() {
                                     </div>
 
                                     <Button onClick={handleProceedToQR} className="submit-btn w-full rounded-2xl h-16 text-xl font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-xl shadow-primary/20 group">
-                                        Proceed to Pay ₹{amount}
+                                        Proceed to Pay {amount ? `₹${amount}` : ""}
                                     </Button>
 
                                     <div className="flex justify-center items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-widest mt-2">
@@ -155,24 +210,29 @@ export default function DonatePage() {
                             <div className="upi-reveal-container space-y-8 text-center bg-muted/10 p-2 rounded-3xl">
                                 <div className="bg-white p-8 rounded-[32px] border border-border flex flex-col items-center shadow-lg relative overflow-hidden">
                                     <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary via-secondary to-primary" />
-                                    <h3 className="upi-element text-2xl font-black text-primary mb-8 font-playfair">Scan to Pay via UPI</h3>
+                                    <h3 className="upi-element text-2xl font-black text-primary mb-8 font-playfair">Scan to Pay ₹{amount}</h3>
 
                                     <div className="upi-element qr-box bg-background p-6 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.08)] border border-border mb-8 flex justify-center items-center">
-                                        <QRCodeSVG value={`upi://pay?pa=koalakuddle@bank&pn=Koala%20Kuddle%20Foundation&am=${amount}&cu=INR`} size={180} level={"H"} includeMargin={false} imageSettings={{ src: "/images/logo.jpg", height: 40, width: 40, excavate: true }} />
+                                        <QRCodeSVG
+                                            value={`upi://pay?pa=${NGO_UPI_ID}&pn=Koala%20Kuddle%20Foundation&am=${amount}&cu=INR`}
+                                            size={180}
+                                            level={"H"}
+                                            includeMargin={false}
+                                            imageSettings={{ src: "/images/koala-logo.png", height: 40, width: 40, excavate: true }}
+                                        />
                                     </div>
 
                                     <div className="upi-element bg-muted/50 p-4 w-full max-w-sm rounded-2xl border border-border flex justify-between items-center hover:bg-muted transition-colors">
-                                        <div className="text-left">
+                                        <div className="text-left overflow-hidden mr-2">
                                             <p className="text-xs text-muted-foreground font-bold uppercase tracking-wider mb-1">Official UPI ID</p>
-                                            <p className="font-black text-lg text-foreground font-lato tracking-wide">koalakuddle@bank</p>
+                                            <p className="font-black text-sm md:text-base text-foreground font-lato tracking-wide truncate">{NGO_UPI_ID}</p>
                                         </div>
-                                        <Button variant="secondary" size="icon" className="rounded-xl h-12 w-12 hover:scale-105 shadow-md" onClick={() => { navigator.clipboard.writeText("koalakuddle@bank"); alert("UPI ID Copied!"); }}>
+                                        <Button variant="secondary" size="icon" className="shrink-0 rounded-xl h-12 w-12 hover:scale-105 shadow-md" onClick={() => { navigator.clipboard.writeText(NGO_UPI_ID); alert("UPI ID Copied!"); }}>
                                             <Copy className="h-5 w-5 text-primary-foreground" />
                                         </Button>
                                     </div>
                                 </div>
 
-                                {/* NEW CONFIRMATION BUTTON */}
                                 <div className="upi-element pt-4">
                                     <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-4">Done Scanning?</p>
                                     <Button disabled={isSubmitting} onClick={handleConfirmPayment} className="confirm-btn w-full rounded-2xl h-16 text-xl font-bold bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-xl shadow-secondary/20 group">
