@@ -88,7 +88,7 @@ export default function Navbar() {
                     >
                         <div ref={logoRef} className="relative w-12 h-12 overflow-hidden rounded-full shadow-sm border border-border">
                             <Image
-                                src="/images/logo.png"
+                                src="/images/koala-logo.png"
                                 alt="Koala Kuddle Logo"
                                 fill
                                 className="object-cover"

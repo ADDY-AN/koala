@@ -129,7 +129,7 @@ export default function AboutPage() {
                         <span className="hero-title-word block text-secondary">Kuddle</span>
                     </h1>
                     <p className="hero-subtitle text-xl md:text-3xl text-muted-foreground font-lato max-w-2xl mx-auto leading-relaxed">
-                        Turning financial struggle into second chances, and quiet worries into brave little victories[cite: 6].
+                        Turning financial struggle into second chances, and quiet worries into brave little victories.
                     </p>
                 </div>
                 <div className="scroll-indicator absolute bottom-10 w-[2px] h-16 bg-gradient-to-b from-primary to-transparent" />
@@ -139,10 +139,10 @@ export default function AboutPage() {
             <section className="story-section py-24 px-5 max-w-3xl mx-auto text-center relative z-10">
                 <span className="story-paragraph text-secondary font-caveat text-4xl mb-6 block">The Heartbreak</span>
                 <p className="story-paragraph text-2xl md:text-3xl font-playfair text-foreground leading-snug mb-8">
-                    At Continua Kids, we see it every single day. A parent brings their 3-year-old who hasn't spoken a word yet. The assessment is clear — speech therapy can transform their life[cite: 54].
+                    At Continua Kids, we see it every single day. A parent brings their 3-year-old who hasn't spoken a word yet. The assessment is clear — speech therapy can transform their life.
                 </p>
                 <p className="story-paragraph text-xl text-muted-foreground font-lato leading-relaxed mb-8">
-                    The verdict? <strong className="text-primary">"We can't afford it."</strong> They walk out. The child's window of early intervention slowly closes[cite: 54].
+                    The verdict? <strong className="text-primary">"We can't afford it."</strong> They walk out. The child's window of early intervention slowly closes.
                 </p>
                 <div className="story-paragraph p-8 border-l-4 border-secondary bg-primary/5 rounded-r-2xl text-left">
                     <p className="text-xl font-playfair italic text-primary">
@@ -160,7 +160,7 @@ export default function AboutPage() {
                             A world where no child's progress is paused.
                         </h2>
                         <p className="vision-text text-muted-foreground text-lg leading-relaxed mb-6">
-                            We envision a future where every little hand finds the support it needs to grow, play, and shine with confidence[cite: 3]. Potential should never depend on financial privilege[cite: 63].
+                            We envision a future where every little hand finds the support it needs to grow, play, and shine with confidence. Potential should never depend on financial privilege.
                         </p>
                     </div>
                     <div className="rounded-[40px] overflow-hidden shadow-2xl border-4 border-white relative h-[500px]">
@@ -185,13 +185,13 @@ export default function AboutPage() {
                     <span className="text-secondary font-caveat text-5xl mb-8 block relative z-10 transform -rotate-2">Our Mission</span>
 
                     <p className="text-3xl md:text-4xl font-playfair font-bold leading-tight mb-8 relative z-10 text-white">
-                        Koala Kuddle exists so that underprivileged children are not left waiting outside the therapy room while others move ahead[cite: 5].
+                        Koala Kuddle exists so that underprivileged children are not left waiting outside the therapy room while others move ahead.
                     </p>
 
                     <div className="w-24 h-1 bg-secondary mb-8 relative z-10" />
 
                     <p className="text-primary-foreground/90 text-xl font-lato leading-relaxed relative z-10">
-                        By nurturing early intervention and funding life-changing therapy sessions at partner clinics, we wrap families in a community of hope[cite: 6]. We exist because you choose to care[cite: 81].
+                        By nurturing early intervention and funding life-changing therapy sessions at partner clinics, we wrap families in a community of hope. We exist because you choose to care.
                     </p>
                 </div>
             </section>
