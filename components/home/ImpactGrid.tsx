@@ -56,7 +56,7 @@ export default function ImpactGrid() {
                     <div className="text-4xl md:text-6xl font-black text-secondary mb-2 font-lato">
                         <span className="count-up" data-target="1">0</span>
                     </div>
-                    <div className="text-xs md:text-sm text-primary-foreground font-bold uppercase tracking-wider">Children in 6 Face Delays</div>
+                    <div className="text-xs md:text-sm text-primary-foreground font-bold uppercase tracking-wider"> in 6 Children Face Delays</div>
                 </div>
                 <div className="impact-box px-4">
                     <div className="text-4xl md:text-6xl font-black text-secondary mb-2 font-lato">
